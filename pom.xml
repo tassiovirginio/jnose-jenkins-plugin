@@ -8,7 +8,7 @@
         <relativePath />
     </parent>
     <groupId>com.tassiovirginio.jnose.plugin</groupId>
-    <artifactId>jnose</artifactId>
+    <artifactId>jnose-jenkins</artifactId>
     <version>${revision}</version>
     <packaging>hpi</packaging>
     <properties>
