@@ -6,7 +6,7 @@
         </l:side-panel>
         <l:main-panel>
             <h1>
-                Name: ${it.name}
+                Path: ${it.projectPath}
             </h1>
         </l:main-panel>
     </l:layout>
