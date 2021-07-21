@@ -156,8 +156,9 @@ public class JNoseAction implements RunAction2 {
 
     @Override
     public String getIconFileName() {
-        return "document.png";
+//        return "document.png";
 //        return (Jenkins.RESOURCE_PATH + "/logo.png").replaceFirst("^/", "");
+        return Jenkins.RESOURCE_PATH + "/plugin/jnose-jenkins/img/logo.png";
     }
 
     @Override

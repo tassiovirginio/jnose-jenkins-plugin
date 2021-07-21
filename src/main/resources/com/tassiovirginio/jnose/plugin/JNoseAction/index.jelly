@@ -5,6 +5,15 @@
             <st:include page="sidepanel.jelly" it="${it.run}" optional="true" />
         </l:side-panel>
         <l:main-panel>
+            <img style="width: 50px;" src="/jenkins/plugin/jnose-jenkins/img/logo.png">
+                <st:nbsp/><st:nbsp/> JNose TestSmell Detector - <a target="_blank" href="https://jnosetest.github.io/">Jnose Web Site</a> - <a target="_blank" href="https://github.com/arieslab/jnose-core">Jnose Core Site</a>
+            </img>
+            <br></br>
+            <br></br>
+            <a href="https://arieslab.github.io" target="_blank">
+                <img style="width: 150px;" src="https://arieslab.github.io/assets/img/arieslab-original.png"></img>
+            </a>
+            <br></br>
             <h1>
                 Projeto: ${it.projectName}
             </h1>
