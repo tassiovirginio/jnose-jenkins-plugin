@@ -48,100 +48,17 @@ public class JnosePluginBuilder extends Builder implements SimpleBuildStep {
     }
 
     @Override
-    public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+    public void perform(Run<?, ?> run, FilePath projectDir, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+
+        run.addAction(new JNoseAction(projectDir.getRemote()));
+
         if (useFrench) {
             listener.getLogger().println("Bonjour, " + name + "!");
         } else {
             listener.getLogger().println("Procurando TestSmells, " + name + "!");
         }
 
-        Config conf = new Config() {
-            public Boolean assertionRoulette() {
-                return true;
-            }
-            public Boolean conditionalTestLogic() {
-                return true;
-            }
-            public Boolean constructorInitialization() {
-                return true;
-            }
-            public Boolean defaultTest() {
-                return true;
-            }
-            public Boolean dependentTest() {
-                return true;
-            }
-            public Boolean duplicateAssert() {
-                return true;
-            }
-            public Boolean eagerTest() {
-                return true;
-            }
-            public Boolean emptyTest() {
-                return true;
-            }
-            public Boolean exceptionCatchingThrowing() {
-                return true;
-            }
-            public Boolean generalFixture() {
-                return true;
-            }
-            public Boolean mysteryGuest() {
-                return true;
-            }
-            public Boolean printStatement() {
-                return true;
-            }
-            public Boolean redundantAssertion() {
-                return true;
-            }
-            public Boolean sensitiveEquality() {
-                return true;
-            }
-            public Boolean verboseTest() {
-                return true;
-            }
-            public Boolean sleepyTest() {
-                return true;
-            }
-            public Boolean lazyTest() {
-                return true;
-            }
-            public Boolean unknownTest() {
-                return true;
-            }
-            public Boolean ignoredTest() {
-                return true;
-            }
-            public Boolean resourceOptimism() {
-                return true;
-            }
-            public Boolean magicNumberTest() {
-                return true;
-            }
-            public Integer maxStatements() {
-                return 30;
-            }
-        };
 
-        JNoseCore jNoseCore = new JNoseCore(conf);
-        List<TestClass> lista = jNoseCore.getFilesTest(workspace.getRemote());
-
-        Boolean primeiraLinha = true;
-
-        for(TestClass testClass : lista){
-            listener.getLogger().println("class-test: " + testClass.getName() + "\t\t\t junit-version: " + testClass.getJunitVersion() + "\t\t\t qtd-test-smells:" + testClass.getListTestSmell().size());
-            List<TestSmell> listaTestSmells = testClass.getListTestSmell();
-            primeiraLinha = true;
-
-            for(TestSmell testSmell : listaTestSmells){
-                if(primeiraLinha){
-                    listener.getLogger().println("\t\t\t TestSmell \t\t\t Method \t\t\t Range ");
-                    primeiraLinha = false;
-                }
-                listener.getLogger().println("\t\t\t" + testSmell.getName() + "\t\t\t" + testSmell.getMethod() + "\t\t\t" + testSmell.getRange());
-            }
-        }
     }
 
     @Symbol("greet")
