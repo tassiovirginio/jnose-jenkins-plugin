@@ -10,6 +10,7 @@ import jenkins.model.Jenkins;
 import jenkins.model.RunAction2;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JNoseAction implements RunAction2 {
@@ -18,10 +19,16 @@ public class JNoseAction implements RunAction2 {
 
     private String qtdTestSmells;
 
+    private String projectName;
+
+    private List<String[]> results;
+
     private transient Run run;
 
     public JNoseAction(String projectPath) {
         this.projectPath = projectPath;
+
+        this.results = new ArrayList<>();
 
         Config conf = new Config() {
             public Boolean assertionRoulette() {
@@ -103,20 +110,36 @@ public class JNoseAction implements RunAction2 {
         Boolean primeiraLinha = true;
 
         for(TestClass testClass : lista){
-            System.out.println("class-test: " + testClass.getName() + "\t\t\t junit-version: " + testClass.getJunitVersion() + "\t\t\t qtd-test-smells:" + testClass.getListTestSmell().size());
+//            System.out.println("class-test: " + testClass.getName() + "\t\t\t junit-version: " + testClass.getJunitVersion() + "\t\t\t qtd-test-smells:" + testClass.getListTestSmell().size());
             List<TestSmell> listaTestSmells = testClass.getListTestSmell();
-            primeiraLinha = true;
+
+            if(primeiraLinha) {
+                this.projectName = testClass.getProjectName();
+                primeiraLinha = false;
+            }
 
             for(TestSmell testSmell : listaTestSmells){
-                if(primeiraLinha){
-                    System.out.println("\t\t\t TestSmell \t\t\t Method \t\t\t Range ");
-                    primeiraLinha = false;
-                }
-                System.out.println("\t\t\t" + testSmell.getName() + "\t\t\t" + testSmell.getMethod() + "\t\t\t" + testSmell.getRange());
+//                if(primeiraLinha){
+//                    System.out.println("\t\t\t TestSmell \t\t\t Method \t\t\t Range ");
+//                    primeiraLinha = false;
+//                }
+//                System.out.println("\t\t\t" + testSmell.getName() + "\t\t\t" + testSmell.getMethod() + "\t\t\t" + testSmell.getRange());
+                String[] line = new String[4];
+                line[0] = testClass.getName();
+                line[1] = testSmell.getMethod();
+                line[2] = testSmell.getName();
+                line[3] = testSmell.getRange();
+
+                results.add(line);
+
             }
         }
 
 
+    }
+
+    public String getProjectName(){
+        return this.projectName;
     }
 
     public String getProjectPath() {
@@ -125,6 +148,10 @@ public class JNoseAction implements RunAction2 {
 
     public String getQtdTestSmells(){
         return qtdTestSmells;
+    }
+
+    public List<String[]> getResults(){
+        return results;
     }
 
     @Override
